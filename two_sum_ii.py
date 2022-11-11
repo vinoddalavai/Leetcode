@@ -2,17 +2,37 @@ from typing import List
 
 
 class TwoSumII:
-    def two_sum(self, numbers: List[int], target: int) -> List[int]:
+    def _two_sum(self, numbers: List[int], target: int) -> List[int]:
+        # Input list is already sorted
+        # initialize left and right pointers at the beginning and end of the list
         left, right = 0, len(numbers) - 1
-        result = []
+        # loop till left and right are at the same index value
         while left < right:
-            sum_of_numbers = numbers[left] + numbers[right]
-            if sum_of_numbers == target:
-                result.append(left + 1)
-                result.append(right + 1)
-                return result
-            elif sum_of_numbers < target:
+            # calculate sum
+            result = numbers[left] + numbers[right]
+            # if sum equals target value then return the 1-indexed positions of the pointers
+            if result == target:
+                return [left + 1, right + 1]
+            # if sum is less than target then we need a bigger number for the result, hence move left pointer to the
+            # next index position
+            elif result < target:
                 left += 1
+            # if sum is greater than the target then we need a smaller number for the result, hence move the right
+            # pointer to the previous index position
             else:
                 right -= 1
-        return result
+        # return empty list if the target is not achievable by any of the values in the list
+        return []
+
+    def process(self, nums: List[int], t: int) -> None:
+        print(f"\nOutput >> {self._two_sum(nums, t)}\n")
+
+
+if __name__ == '__main__':
+    size = int(input("Enter size of the list: "))
+    print("Enter the values of the list: ")
+    input_list = []
+    for _ in range(size):
+        input_list.append(int(input()))
+    tar = int(input("Enter the target value: "))
+    TwoSumII().process(input_list, tar)
