@@ -1,33 +1,34 @@
+"""
+Approach: Arrays and Hashing
+Time Complexity: O(N)
+Space Complexity: O(1)
+"""
+
 class ValidAnagram:
-    def is_anagram_using_map(self, s: str, t: str) -> bool:
-        char_map = {}
-        for char in s:
-            char_map[char] = 1 + char_map.get(char, 0)
-        for char in t:
-            char_map[char] = char_map.get(char, 0) - 1
-        for count in char_map.values():
-            if count != 0:
+    def _is_anagram(self, s: str, t: str) -> bool:
+        # if the two strings of different lengths they cannot be anagrams. Hence, return False.
+        if len(s) != len(t):
+            return False
+        # initialize a string map that will keep count of the letters appearing in the inputs
+        s_map, t_map = {}, {}
+        # get the count of every character in strings s and t. Strings s and t will have same length at this point.
+        for index in range(len(s)):
+            s_map[s[index]] = 1 + s_map.get(s[index], 0)
+            t_map[t[index]] = 1 + t_map.get(t[index], 0)
+        # iterate through every character of string s and check if the count of that character in s_map and t_map. If
+        # they are unequal, return False.
+        for character in s:
+            if s_map.get(character, 0) != t_map.get(character, 0):
                 return False
+        # if the control reaches this point, it means that all the characters in s_map have equated to t_map. Hence,
+        # s and t are anagram.
         return True
 
-    def is_anagram_using_list(self, s: str, t: str) -> bool:
-        freq = [0] * 26
-        for char in s:
-            freq[ord(char) - ord('a')] += 1
-        for char in t:
-            freq[ord(char) - ord('a')] -= 1
-        for count in freq:
-            if count != 0:
-                return False
-        return True
+    def process(self, s_string: str, t_string: str) -> None:
+        print(f"\n Output >> {self._is_anagram(s_string, t_string)}\n")
 
 
-string1, string2 = "anagram", "nagaram"
-string3, string4 = "rat", "car"
-print("Using hash map:")
-print(ValidAnagram().is_anagram_using_map(string1, string2))
-print(ValidAnagram().is_anagram_using_map(string3, string4))
-print()
-print("Using list:")
-print(ValidAnagram().is_anagram_using_list(string1, string2))
-print(ValidAnagram().is_anagram_using_list(string3, string4))
+if __name__ == '__main__':
+    string1 = input("Enter first string: ")
+    string2 = input("Enter second string: ")
+    ValidAnagram().process(string1, string2)

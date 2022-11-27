@@ -1,32 +1,57 @@
+"""
+Approach: Two Pointer
+Time Complexity: O(N^2)
+Space Complexity: O(N)
+"""
+
 from typing import List
 
 
 class ThreeSum:
-    def three_sum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
+    def _calculateThreeSum(self, nums: List[int]) -> List[List[int]]:
+        # initialize result to be a list
         result = []
+        # sort the input in ascending order so that we can use the two pointer approach with an outer loop
+        nums.sort()
+        # start outer loop
         for index in range(len(nums)):
+            # no need to consider an element that has already occurred before as the results will not change
             if index > 0 and nums[index] == nums[index - 1]:
                 continue
+            # use the two pointer approach to check if the sum of all the three numbers sum to zero
+            # start left on the next index position with respect to the outer index and right will be
+            # pointing at the last element
             left, right = index + 1, len(nums) - 1
             while left < right:
-                sum_of_numbers = nums[index] + nums[left] + nums[right]
-                if sum_of_numbers == 0:
-                    result.append([nums[index], nums[left], nums[right]])
-                    left += 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                elif sum_of_numbers < 0:
+                # calculate the sum of the three numbers being pointed by the indices
+                temp_sum = nums[index] + nums[left] + nums[right]
+                # if sum > 0 then decrement right pointer as we need to reduce the sum
+                if temp_sum > 0:
+                    right -= 1
+                # if sum < 0 then increment the left pointer as we need to increase the sum
+                elif temp_sum < 0:
                     left += 1
                 else:
-                    right -= 1
+                    # if the sum is zero then add the three numbers to the result array and then increment the left
+                    # pointer
+                    result.append([nums[index], nums[left], nums[right]])
+                    left += 1
+                    # keep incrementing left pointer if the next number is the same as the previous number because
+                    # it will produce duplicate triplets
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+        # return result list
         return result
 
+    def process(self, nums: List[int]) -> None:
+        print(f"\nOutput >> {self._calculateThreeSum(nums)}\n")
 
-numbers1, numbers2, numbers3 = [-1, 0, 1, 2, -1, -4], [], [0]
-print("Three sum result of " + str(numbers1) + " : " +
-      str(ThreeSum().three_sum(numbers1)))
-print("Three sum result of " + str(numbers2) + " : " +
-      str(ThreeSum().three_sum(numbers2)))
-print("Three sum result of " + str(numbers3) + " : " +
-      str(ThreeSum().three_sum(numbers3)))
+
+if __name__ == '__main__':
+    no_of_elements = int(input("Enter the number of elements in the list: "))
+    input_list = []
+    print("Enter the values of the list: ")
+    for _ in range(no_of_elements):
+        input_list.append(int(input()))
+    ThreeSum().process(input_list)
+
