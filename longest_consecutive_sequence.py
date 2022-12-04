@@ -1,25 +1,42 @@
+"""
+Approach: Arrays and Hashing
+Time Complexity: O(N)
+Space Complexity: O(N)
+"""
+
 from typing import List
 
 
 class LongestConsecutiveSequence:
-    def longest_consecutive(self, nums: List[int]) -> int:
+    def _longest_consecutive(self, nums: List[int]) -> int:
+        # initialize result to 0
+        result = 0
+        # initialize a set which will have values of nums
         nums_set = set(nums)
-        longest = 0
+        # iterate through the numbers in input list
         for num in nums:
+            # check if number - 1 does not exist in the set. This means that the current number is the lowest in
+            # its sequence
             if num - 1 not in nums_set:
-                current_longest = 1
-                while num + 1 in nums_set:
-                    current_longest += 1
-                    num += 1
-                longest = max(longest, current_longest)
-        return longest
+                # set count to 1
+                count = 1
+                # loop until number + count is present in the set
+                while num + count in nums_set:
+                    # keep incrementing count
+                    count += 1
+                # result is the max value of count calculated for the input list
+                result = max(count, result)
+        # return result
+        return result
+
+    def process(self, input_nums: List[int]) -> None:
+        print(f"\nOutput >> {self._longest_consecutive(input_nums)}\n")
 
 
-nums_list1 = [100, 4, 200, 1, 3, 2]
-nums_list2 = [0, 3, 7, 2, 5, 8, 4, 6, 0, 1]
-print("Longest consecutive sequence for " +
-      str(nums_list1) + ": " +
-      str(LongestConsecutiveSequence().longest_consecutive(nums_list1)))
-print("Longest consecutive sequence for " +
-      str(nums_list2) + ": " +
-      str(LongestConsecutiveSequence().longest_consecutive(nums_list2)))
+if __name__ == '__main__':
+    no_of_elements = int(input("Enter the number of elements in the list: "))
+    input_nums_list = []
+    print("Enter the numbers into the list: ")
+    for _ in range(no_of_elements):
+        input_nums_list.append(int(input()))
+    LongestConsecutiveSequence().process(input_nums_list)

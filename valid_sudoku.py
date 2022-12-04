@@ -1,73 +1,56 @@
+"""
+Approach: Arrays and Hashing
+Time Complexity: O(N^2)
+Space Complexity: O(N^2)
+"""
+
 from collections import defaultdict
 from typing import List
 
 
 class ValidSudoku:
-    def is_valid_sudoku_using_hashset(self, board: List[List[str]]) -> bool:
-        rows = defaultdict(set)
-        columns = defaultdict(set)
-        boxes = defaultdict(set)
+    def _is_valid_sudoku(self, board: List[List[str]]) -> bool:
+        # initialize rows, cols and boxes to be dictionaries with values as set
+        rows, cols, boxes = defaultdict(set), defaultdict(set), defaultdict(set)
+        # iterate through every row of the board
         for row in range(9):
-            for column in range(9):
-                if board[row][column] == '.':
+            # iterate through every column of the board
+            for col in range(9):
+                # get the value of that cell on the board
+                value = board[row][col]
+                # skip if value is not a number
+                if value == '.':
                     continue
-                if (board[row][column] in rows[row] or
-                        board[row][column] in columns[column] or
-                        board[row][column] in boxes[(row // 3, column // 3)]):
+                # check if value exists in rows, cols or boxes
+                if (value in rows[row] or
+                        value in cols[col] or
+                        value in boxes[(row//3, col//3)]):
+                    # if present, return False
                     return False
-                rows[row].add(board[row][column])
-                columns[column].add(board[row][column])
-                boxes[(row // 3, column // 3)].add(board[row][column])
+                # if value does not exist then add to rows, cols and boxes
+                rows[row].add(value)
+                cols[col].add(value)
+                boxes[(row//3, col//3)].add(value)
+        # if control reaches here then every row, column and box has non-repetitive digits
         return True
 
-    def is_valid_sudoku_using_bit_manipulation(self, board: List[List[str]]) -> bool:
-        rows = [0] * 9
-        columns = [0] * 9
-        boxes = [0] * 9
-        for row in range(9):
-            for column in range(9):
-                current = board[row][column]
-                if current == '.':
-                    continue
-                pos = int(current) - 1
-                if (rows[row] & (1 << pos) or
-                        columns[column] & (1 << pos) or
-                        boxes[((row // 3) * 3 + column // 3)] & (1 << pos)):
-                    return False
-                rows[row] |= (1 << pos)
-                columns[column] |= (1 << pos)
-                boxes[((row // 3) * 3 + column // 3)] |= (1 << pos)
-        return True
+    def process(self, input_board: List[List[str]]) -> None:
+        print(f"\nOutput >> {self._is_valid_sudoku(input_board)}\n")
 
 
-board1 = [
-    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
-    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-    [".", "9", "8", ".", ".", ".", ".", "6", "."],
-    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
-    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-    [".", "6", ".", ".", ".", ".", "2", "8", "."],
-    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
-]
-print("Board 1 - Is valid sudoku? (HashSet) : " +
-      str(ValidSudoku().is_valid_sudoku_using_hashset(board1)))
-print("Board 1 - Is valid sudoku? (Bit Manipulation) : " +
-      str(ValidSudoku().is_valid_sudoku_using_bit_manipulation(board1)))
-print()
-board2 = [
-    ["8", "3", ".", ".", "7", ".", ".", ".", "."],
-    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-    [".", "9", "8", ".", ".", ".", ".", "6", "."],
-    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
-    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-    [".", "6", ".", ".", ".", ".", "2", "8", "."],
-    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
-]
-print("Board 2 - Is valid sudoku? (HashSet) : " +
-      str(ValidSudoku().is_valid_sudoku_using_hashset(board2)))
-print("Board 2 - Is valid sudoku? (Bit Manipulation) : " +
-      str(ValidSudoku().is_valid_sudoku_using_bit_manipulation(board2)))
+if __name__ == '__main__':
+    size = 9
+    input_sudoku_board = [["." for _ in range(size)] for _ in range(size)]
+    for r in range(size):
+        for c in range(size):
+            v = input(f"Enter number at position ({r}, {c}): ")
+            if not v:
+                continue
+            else:
+                input_sudoku_board[r][c] = v
+    print("\nYour board is as follows:")
+    for r in range(size):
+        for c in range(size):
+            print(input_sudoku_board[r][c], end="\t")
+        print()
+    ValidSudoku().process(input_sudoku_board)
