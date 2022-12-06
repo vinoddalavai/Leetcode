@@ -1,3 +1,9 @@
+"""
+Approach: Binary Search
+Time Complexity: O(log(N))
+Space Complexity: O(1)
+"""
+
 from typing import List
 
 
@@ -14,16 +20,16 @@ class BinarySearch:
         left, right = 0, len(nums) - 1
         # loop until left and right pointers cross each other
         while left <= right:
-            # calculate the mid index between left and right
+            # calculate the mid-index between left and right
             mid = (right + left) // 2
-            # return the mid index if the number at this index is equal to target
+            # return the mid-index if the number at this index is equal to target
             if nums[mid] == target:
                 return mid
-            # if number at mid index is less than target then search needs to be narrowed to right of mid.
+            # if number at mid-index is less than target then search needs to be narrowed to right of mid.
             if nums[mid] < target:
                 # new left pointer will point to the next index value of mid
                 left = mid + 1
-            # if number at mid index is more than target then search needs to be narrowed to the left of mid
+            # if number at mid-index is more than target then search needs to be narrowed to the left of mid
             else:
                 # new right pointer will point to the previous index value of mid
                 right = mid - 1
