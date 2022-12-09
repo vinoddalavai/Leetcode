@@ -1,37 +1,55 @@
+"""
+Approach: Linked List
+Time Complexity: O(N)
+Space Complexity: O(N)
+"""
+
 from typing import Optional
 
-import list_node
-from list_node import ListNode
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        if not self:
+            return None
+        return f"{self.val} -> {self.next}"
 
 
 class ReverseLinkedList:
-    def reverse_list_recursive(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head:
-            return None
-        if not head.next:
+    def _reverse_list(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """ Return the reversed linked list
+        Take as input a node which is the start of a linked list, reverse the linked list and return
+        the head of the reversed list
+        :param head: ListNode that marks the head of the linked list
+        :return: ListNode of the head that is the reversed linked list
+        """
+
+        # base case: if head is None or head points to None (i.e. it is the last/only node) then return that head.
+        if not head or not head.next:
             return head
-        reverse = self.reverse_list_recursive(head.next)
+        # recursively call this method
+        reverse = self._reverse_list(head.next)
+        # change the direction of the pointers
         head.next.next = head
         head.next = None
+        # return the reversed list i.e. the ListNode which is the head of the reversed linked list
         return reverse
 
-    def reverse_list_iterative(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        previous = None
-        current = head
-        while current:
-            temp, current.next = current.next, previous
-            previous, current = current, temp
-        return previous
+    def process(self, input_head: Optional[ListNode]) -> None:
+        print(f"\nOutput:\n\t{self._reverse_list(input_head)}\n")
 
 
 if __name__ == '__main__':
-    values = [1, 2, 3, 4, 5]
-    nodes = list_node.create_list_node(values)
-    print("Original linked list: \n\t" + str(nodes))
-    print("\nReversed Linked List: ")
-    reversed_ll = ReverseLinkedList().reverse_list_recursive(nodes)
-    print("\tRecursive Solution: \n\t" + str(reversed_ll))
-    values = [1, 2, 3, 4, 5]
-    nodes = list_node.create_list_node(values)
-    reversed_ll = ReverseLinkedList().reverse_list_iterative(nodes)
-    print("\n\tIterative Solution: \n\t" + str(reversed_ll))
+    count = int(input("Enter the number of nodes in the linked list: "))
+    input_node = ListNode()
+    copy_input = input_node
+    for index in range(count):
+        input_node.val = int(input(f"Enter value for Node {index}: "))
+        input_node.next = ListNode() if index < (count - 1) else None
+        input_node = input_node.next
+    input_node = None
+    print(f"\nProvided linked list:\n\t{copy_input}")
+    ReverseLinkedList().process(copy_input)
