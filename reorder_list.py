@@ -1,38 +1,63 @@
+"""
+Approach: Linked List
+Time Complexity: O(N)
+Space Complexity: O(1)
+"""
+
 from typing import Optional
 
-import list_node
-from list_node import ListNode
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
+    def __str__(self):
+        if not self:
+            return None
+        return f"{self.val} -> {self.next}"
 
 class ReorderList:
-    #   Time Complexity: O(n)
-    #   Space Complexity: O(1)
-    def reorder_list(self, head: Optional[ListNode]) -> None:
-        #   find the mid of list
+    def _reorder_list(self, head: Optional[ListNode]) -> None:
+        """ Reorder the linked list
+        Accept the head node of a linked list and reorder it
+        :param head: ListNode which is the first node of the linked list input
+        :return: None
+        """
+
+        # find middle node
         slow, fast = head, head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        print("Mid point : " + str(slow))
-        #   reverse the second half of list
-        previous, current = None, slow
-        while current:
-            temp, current.next = current.next, previous
-            previous, current = current, temp
-        print("Reversed 2nd half: " + str(previous))
-        print("1st half: " + str(head))
-        #   merge the first half and the reversed second half
-        first, second = head, previous
-        result = first
-        while second.next:
-            f_temp = first.next
-            first.next = second
-            first = f_temp
-            s_temp = second.next
-            second.next = first
-            second = s_temp
-        print("Merged: " + str(result))
+
+        # reverse second half of the linked list iteratively
+        second = slow.next
+        previous = slow.next = None
+        while second:
+            temp = second.next
+            second.next = previous
+            previous = second
+            second = temp
+
+        # merge two lists
+        list1, list2 = head, previous
+        while list2:
+            temp1, temp2 = list1.next, list2.next
+            list1.next = list2
+            list2.next = temp1
+            list1, list2 = temp1, temp2
+
+    def process(self, input_head: Optional[ListNode]) -> None:
+        self._reorder_list(input_head)
+        print(f"\nOutput:\n\t {input_head}\n")
 
 
-test_list = list_node.create_list_node([1, 2, 3, 4, 5])
-ReorderList().reorder_list(test_list)
+if __name__ == '__main__':
+    count = int(input("Enter the number of nodes in the linked list: "))
+    input_node = ListNode()
+    copy_input = input_node
+    for index in range(count):
+        input_node.val = int(input(f"Enter value for Node {index}: "))
+        input_node.next = ListNode() if index < (count - 1) else None
+        input_node = input_node.next
+    ReorderList().process(copy_input)
