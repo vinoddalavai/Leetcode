@@ -2,18 +2,43 @@ from typing import List
 
 
 class FindDuplicateNumber:
-    def find_duplicate(self, nums: List[int]) -> int:
+    def _find_duplicate(self, nums: List[int]) -> int:
+        """ Return the first index of the repeating number
+        Accept a list input and return the repeating number in the list
+        :param nums: List input of numbers
+        :return: Integer representing the repeating number in the list
+        """
+
+        # declare and initialize a slow and fast pointer starting at the first position of the list
         slow, fast = 0, 0
+        # loop until slow and fast point are pointing at duplicates
         while True:
-            slow, fast = nums[slow], nums[nums[fast]]
+            # we consider the index as the node and the value as the index that node points to.
+            # slow moves one node and fast moves two nodes
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            # if slow is equal to fast then we have found the cycle, and we break the loop
             if slow == fast:
                 break
+        # start another pointer at 0 index
         slow2 = 0
+        # iterate until slow equals slow2. This will be the node that marks the start of the cycle
         while True:
-            slow, slow2 = nums[slow], nums[slow2]
+            # shift slow and slow2 by one node
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            # if slow equals slow2 return slow. That will be the node that marks the start of the cycle
             if slow == slow2:
                 return slow
 
+    def process(self, input_nums: List[int]) -> None:
+        print(f"\nOutput >> {self._find_duplicate(input_nums)}\n")
 
-numbers = [1, 3, 4, 2, 2]
-print("Duplicate number is: " + str(FindDuplicateNumber().find_duplicate(numbers)))
+
+if __name__ == '__main__':
+    input_nums_size = int(input("Enter the size of the list: "))
+    input_nums_list = []
+    print("Enter the numbers in the list:")
+    for index in range(input_nums_size):
+        input_nums_list.append(int(input(f"\tEnter the value at index {index}: ")))
+    FindDuplicateNumber().process(input_nums_list)
