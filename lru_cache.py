@@ -106,16 +106,29 @@ class LRUCache:
             # remove it from the hashmap
             del self.cache[lru.key]
 
+    def print_menu(self):
+        print("Q: Quit\n"
+              "1: Add to LRU Cache\n"
+              "2: Get from LRU Cache\n")
+
 
 if __name__ == '__main__':
     input_capacity = int(input("Enter the capacity of the LRU Cache: "))
+    exit_program = False
     lru_obj = LRUCache(input_capacity)
-    print(lru_obj.put(1, 1))
-    print(lru_obj.put(2, 2))
-    print(lru_obj.get(1))
-    print(lru_obj.put(3, 3))
-    print(lru_obj.get(2))
-    print(lru_obj.put(4, 4))
-    print(lru_obj.get(1))
-    print(lru_obj.get(3))
-    print(lru_obj.get(4))
+    lru_obj.print_menu()
+    while not exit_program:
+        choice = input("Enter an operation from the menu: ")
+        if choice == 'Q':
+            exit_program = True
+        elif choice == '1':
+            input_key = int(input("Enter an integer as the key for the cache: "))
+            input_value = int(input("Enter an integer as the value for the cache: "))
+            print(lru_obj.put(input_key, input_value))
+        elif choice == '2':
+            input_key = int(input("Enter an integer which would be the key you want to retrieve from the cache: "))
+            print(lru_obj.get(input_key))
+        elif choice == '3':
+            lru_obj.print_menu()
+        else:
+            print("Invalid choice. Please try again.")
