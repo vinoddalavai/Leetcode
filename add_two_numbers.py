@@ -64,7 +64,7 @@ class AddTwoNumbers:
         return result.next
 
     def process(self, input_list1: Optional[ListNode], input_list2: Optional[ListNode]) -> None:
-        print(f"\nOutput:\n\t{self._addTwoNumbers(input_list1, input_list2)}\n")
+        print(f"\nOutput:\n\t{self._add_two_numbers(input_list1, input_list2)}\n")
 
 
 if __name__ == '__main__':
