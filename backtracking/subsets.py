@@ -1,3 +1,5 @@
+import sys
+
 from typing import List
 
 
@@ -50,11 +52,14 @@ class Subsets:
 
 
 if __name__ == '__main__':
-    list_size = int(input('Enter the size of the list: '))
-    input_nums = []
-    print()
-    for index in range(list_size):
-        input_nums.append(int(input(
-            f"Enter the value for number at index {index + 1}: ")))
-    print(f"\n Input list is: {input_nums}")
-    Subsets().process(input_nums)
+    if sys.argv[1] == '-d':
+        Subsets().process([1, 2, 3])
+    else:
+        list_size = int(input('Enter the size of the list: '))
+        input_nums = []
+        print()
+        for index in range(list_size):
+            input_nums.append(int(input(
+                f"Enter the value for number at index {index + 1}: ")))
+        print(f"\n Input list is: {input_nums}")
+        Subsets().process(input_nums)
