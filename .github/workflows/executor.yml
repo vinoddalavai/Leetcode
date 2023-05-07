@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Leetcode repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
       with:
-        repository: jcdan3/devops
+        repository: vinoddalavai/Leetcode
         token: ${{ secrets.GITHUB_TOKEN }}
         path: Leetcode
     - name: Execution
