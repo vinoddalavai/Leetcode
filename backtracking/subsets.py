@@ -48,11 +48,12 @@ class Subsets:
         return result
 
     def process(self, input_list: List[int]) -> None:
+        print(f"\nInput: \n\t{input_list}")
         print(f"\nOutput:\n\t{self._find_subset(input_list)}\n")
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == '-d':
+    if len(sys.argv) > 1 and sys.argv[1] == '-d':
         Subsets().process([1, 2, 3])
     else:
         list_size = int(input('Enter the size of the list: '))

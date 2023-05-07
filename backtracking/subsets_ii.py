@@ -1,3 +1,5 @@
+import sys
+
 from typing import List
 
 
@@ -51,15 +53,19 @@ class SubsetII:
         return result
 
     def process(self, input_list: List[int]) -> None:
+        print(f"\nInput: \n\t{input_list}")
         print(f"\nOutput:\n\t{self._subsets_with_duplicates(input_list)}\n")
 
 
 if __name__ == '__main__':
-    list_size = int(input('Enter the size of the list: '))
-    input_nums = []
-    print()
-    for index in range(list_size):
-        input_nums.append(int(input(
-            f"Enter the value for number at index {index + 1}: ")))
-    print(f"\n Input list is: {input_nums}")
-    SubsetII().process(input_nums)
+    if len(sys.argv) > 1 and sys.argv[1] == '-d':
+        SubsetII().process([1, 2, 2, 3])
+    else:
+        list_size = int(input('Enter the size of the list: '))
+        input_nums = []
+        print()
+        for index in range(list_size):
+            input_nums.append(int(input(
+                f"Enter the value for number at index {index + 1}: ")))
+        print(f"\n Input list is: {input_nums}")
+        SubsetII().process(input_nums)
