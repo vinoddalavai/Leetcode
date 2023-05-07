@@ -14,6 +14,10 @@ jobs:
     steps:
     - name: Checkout Leetcode repository
       uses: actions/checkout@main
+      with:
+        repository: vinoddalavai/Leetcode
+        token: ${{ secrets.GITHUB_TOKEN }}
+        path: Leetcode
     - name: Execution
       run: python Leetcode/"${{ inputs.name }}" -d
       shell: sh
