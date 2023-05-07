@@ -19,5 +19,5 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         path: Leetcode
     - name: Execution
-      run: python Leetcode/"${{ inputs.name }}"
+      run: python Leetcode/"${{ inputs.name }}" -d
       shell: sh
