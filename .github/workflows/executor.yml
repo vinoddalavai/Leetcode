@@ -4,7 +4,7 @@ on:
     inputs:
       name:
         description: 'Execute Leetcode Solutions'
-        default: 'backtrack/subsets.py'
+        default: 'backtracking/subsets.py'
         required: true
         type: string
 jobs:
