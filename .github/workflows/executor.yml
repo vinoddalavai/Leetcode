@@ -1,15 +1,14 @@
 name: Executor
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
       name:
-        description: 'Execute program'
-        default: 'Test'
+        description: 'Execute Leetcode Solutions'
+        default: 'backtrack/subsets.py'
         required: true
         type: string
 jobs:
-  execute:
+  execute-solution:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Leetcode repository
