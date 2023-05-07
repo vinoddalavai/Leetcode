@@ -1,3 +1,5 @@
+import sys
+
 from typing import List
 
 
@@ -58,15 +60,19 @@ class CombinationSum:
         return result
 
     def process(self, candidates: List[int], target: int) -> None:
+        print(f"\nInput: \n\tcandidates: {candidates}\ttarget: {target}")
         print(f"\nOutput:\n\t{self._combination_sum(candidates, target)}\n")
 
 
 if __name__ == '__main__':
-    list_length = int(input('Enter length of input list: '))
-    input_target = int(input('Enter target value: '))
-    input_list = []
-    print()
-    for index in range(list_length):
-        input_list.append(int(input(
-            f"Enter the value for index {index + 1}: ")))
-    CombinationSum().process(input_list, input_target)
+    if len(sys.argv) > 1 and sys.argv[1] == '-d':
+        CombinationSum().process([2, 3, 6, 7], 7)
+    else:
+        list_length = int(input('Enter length of input list: '))
+        input_target = int(input('Enter target value: '))
+        input_list = []
+        print()
+        for index in range(list_length):
+            input_list.append(int(input(
+                f"Enter the value for index {index + 1}: ")))
+        CombinationSum().process(input_list, input_target)

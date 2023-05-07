@@ -1,3 +1,5 @@
+import sys
+
 from typing import List
 
 
@@ -40,8 +42,19 @@ class Permutations:
         return result
 
     def process(self, nums: List[int]) -> List[List[int]]:
+        print(f"\nInput: \n\t{nums}")
         print(f"\nOutput:\n\t{self._permute(nums)}\n")
 
 
 if __name__ == '__main__':
-    Permutations().process([1, 2, 3])
+    if len(sys.argv) > 1 and sys.argv[1] == '-d':
+        Permutations().process([1, 2, 3])
+    else:
+        list_size = int(input('Enter the size of the list: '))
+        input_nums = []
+        print()
+        for index in range(list_size):
+            input_nums.append(int(input(
+                f"Enter the value for number at index {index + 1}: ")))
+        print(f"\n Input list is: {input_nums}")
+        Permutations().process(input_nums)
